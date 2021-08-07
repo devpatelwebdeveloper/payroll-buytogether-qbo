@@ -4,9 +4,9 @@ import PayrollTogether from "./Components/Buytogether";
 export default function App() {
   const qbo_simple_start = {
     lang: "en-ca",
-    productName: "QBO_SIMPLE_START",
+    // productName: "QBO_SIMPLE_START",
     mySelectedPlanTitle: "MY SELECTED PLAN",
-    selectedPlan: "EasyStart",
+    // selectedPlan: "EasyStart",
     planDiscountTitle: "Save 50% for 3 months",
     payrollTitle: "Add Payroll (optional)",
     payrollDescription:
@@ -32,5 +32,23 @@ export default function App() {
     taxLabel: "+ applicable tax",
     buttonLabel: "Continue"
   };
-  return <PayrollTogether {...qbo_simple_start} />;
+  return (
+    <>
+      <PayrollTogether
+        {...qbo_simple_start}
+        productName="QBO_SIMPLE_START"
+        selectedPlan="EasyStart"
+      />
+      <PayrollTogether
+        {...qbo_simple_start}
+        productName="QBO_ESSENTIALS"
+        selectedPlan="Essentials"
+      />
+      <PayrollTogether
+        {...qbo_simple_start}
+        productName="QBO_PLUS"
+        selectedPlan="Plus"
+      />
+    </>
+  );
 }
