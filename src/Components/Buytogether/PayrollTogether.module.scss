@@ -1,0 +1,346 @@
+.payrollTogetherModal {
+ position: absolute;
+ width: 100%;
+ background: #FFFFFF;
+ box-shadow: 0px 6px 24px rgba(0, 0, 0, 0.2);
+ border-radius: 12px;
+ margin: 0 auto;
+ padding: 40px;
+ font-family: AvenirNext forINTUIT;
+
+ @media only screen and (min-width: 768px) {
+  width: 680px;
+ }
+}
+
+.selectedPlanContent {
+ display: flex;
+ flex-direction: row;
+ justify-content: space-between;
+ padding-bottom: 40px;
+ align-items: center;
+ border-bottom: 1px solid #BABEC5;
+}
+
+.selectedPlanTitle {
+ color: #6B6C72;
+ font-style: normal;
+ font-weight: 600;
+ font-size: 14px;
+ line-height: 20px;
+ text-transform: uppercase;
+ padding-bottom: 20px;
+}
+
+.planName {
+ font-size: 24px;
+ line-height: 28px;
+ padding-bottom: 8px;
+ font-style: normal;
+ font-weight: 600;
+ color: #393A3D;
+
+ @media only screen and (min-width: 768px) {
+  font-size: 28px;
+  line-height: 36px;
+ }
+
+}
+
+.discountTitle {
+ font-style: normal;
+ font-weight: 600;
+ font-size: 14px;
+ line-height: 20px;
+ color: #393A3D;
+
+ @media only screen and (min-width: 768px) {
+  font-size: 16px;
+  line-height: 24px;
+ }
+}
+
+.priceContainer {
+ color: #393A3D;
+}
+
+.originalPrice {
+ @media only screen and (min-width: 768px) {
+  font-size: 20px;
+  line-height: 28px;
+ }
+
+ font-style: normal;
+ font-weight: normal;
+ font-size: 14px;
+ line-height: 20px;
+ text-decoration-line: line-through;
+
+}
+
+.discountedPrice {
+ font-style: normal;
+ font-weight: bold;
+ font-size: 28px;
+ line-height: 36px;
+
+ @media only screen and (min-width: 768px) {
+  font-size: 48px;
+  line-height: 60px;
+ }
+
+}
+
+.duration {
+ font-style: normal;
+ font-weight: bold;
+ font-size: 16px;
+ line-height: 24px;
+ letter-spacing: 0.0424606px;
+
+}
+
+.payrollContent {
+ display: flex;
+ flex-direction: column;
+ padding: 40px 0px;
+
+ border-bottom: 1px solid #BABEC5;
+}
+
+.payrollOption {
+ display: flex;
+ flex-direction: row;
+ justify-content: space-between;
+ align-items: center;
+}
+
+.payrollText {
+ width: 60%;
+
+ @media only screen and (min-width: 768px) {
+  width: auto
+ }
+}
+
+.payrollTitle {
+ font-style: normal;
+ font-weight: 600;
+ font-size: 20px;
+ line-height: 24px;
+ color: #393A3D;
+
+ @media only screen and (min-width: 768px) {
+  font-size: 24px;
+  line-height: 32px;
+ }
+}
+
+.payrollDescription {
+ font-style: normal;
+ font-weight: normal;
+ font-size: 12px;
+ line-height: 16px;
+ color: #393A3D;
+
+ @media only screen and (min-width: 768px) {
+  font-size: 14px;
+  line-height: 20px;
+ }
+}
+
+.payrollPriceSection {
+ color: #8D9096;
+ display: flex;
+ flex-direction: column;
+ text-align: right;
+}
+
+.payrollSelected {
+ color: #393A3D;
+}
+
+.payrollPrice {
+ font-weight: bold;
+ font-size: 28px;
+ line-height: 36px;
+
+ @media only screen and (min-width: 768px) {
+  font-size: 48px;
+  line-height: 60px;
+ }
+}
+
+.payrollPerEmployee {
+ font-style: normal;
+ font-weight: normal;
+ font-size: 12px;
+ line-height: 16px;
+
+ @media only screen and (min-width: 768px) {
+  font-size: 14px;
+  line-height: 20px;
+
+ }
+}
+
+.radioContainer {
+ display: flex;
+ flex-direction: row;
+ justify-content: flex-start;
+ margin: 20px 0px;
+
+ @media only screen and (min-width: 768px) {
+  flex-direction: column;
+
+ }
+}
+
+
+.radioWrapper:not(:last-child) {
+ margin-right: 40px;
+}
+
+.radio {
+ position: absolute;
+ opacity: 0;
+ cursor: pointer;
+ height: 0;
+ width: 0;
+}
+
+.label {
+ display: flex;
+ align-items: center;
+ height: 20px;
+ cursor: pointer;
+ margin: 8px auto;
+}
+
+.labelRadio {
+ position: relative;
+ border: 1px solid #2CA01C;
+ width: 20px;
+ height: 20px;
+ border-radius: 50%;
+ margin-right: 4px;
+ top: -1px;
+
+ &:before {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  background: #2CA01C;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.2s ease-out;
+  transform-origin: 50% 50%;
+ }
+}
+
+.radio:checked+.label .labelRadio:before {
+ transform: translate(-50%, -50%) scale(1);
+}
+
+.totalContent {
+ display: flex;
+ flex-direction: row;
+ justify-content: space-between;
+ padding-bottom: 40px;
+ align-items: center;
+}
+
+.totalPriceContainer {
+ text-align: right;
+}
+
+.taxText {
+ font-style: normal;
+ font-weight: normal;
+ font-size: 12px;
+ line-height: 16px;
+ margin-bottom: 20px;
+
+ @media only screen and (min-width: 768px) {
+  font-size: 14px;
+  line-height: 20px;
+ }
+}
+
+.uList {
+ display: none;
+
+ @media only screen and (min-width: 768px) {
+  list-style-type: none;
+  padding: 0px;
+  display: block;
+  columns: 2;
+  -webkit-columns: 2;
+  -moz-columns: 2;
+  list-style-type: none;
+  padding: 0px;
+ }
+}
+
+.list {
+ font-style: normal;
+ font-weight: normal;
+ font-size: 14px;
+ line-height: 20px;
+ margin-bottom: 0;
+ position: relative;
+ display: flex;
+
+ &::before {
+  content: url(./checkIcon.svg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.5em;
+  margin-right: 4px;
+ }
+}
+
+.showFeatureBtn {
+ display: none;
+
+ @media only screen and (min-width: 768px) {
+  display: flex;
+ }
+
+ flex-direction: row;
+ align-items: center;
+ border: none;
+ border-radius: 20px;
+ background: none;
+ text-decoration: none;
+ font-style: normal;
+ font-weight: normal;
+ font-size: 14px;
+ line-height: 20px;
+ width: fit-content;
+ margin: 10px 0;
+
+ &:hover {
+  cursor: pointer;
+ }
+
+ // &:focus,// &:active {
+ //  outline: 1px solid #0077c5;
+ // }
+}
+
+.showFeatureBtnIcon {
+ -moz-transition: all 0.25s linear;
+ -webkit-transition: all 0.25s linear;
+ transition: all 0.25s linear;
+}
+
+.showFeatureBtnIconDown {
+ -moz-transform: rotate(90deg);
+ -webkit-transform: rotate(90deg);
+ transform: rotate(90deg);
+}
