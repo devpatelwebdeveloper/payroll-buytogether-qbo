@@ -23,24 +23,21 @@ export default function PayrollTogether({
   const [payrollSelected, setPayrollSelected] = useState(false);
   const [payrollPrice, setPayrollPrice] = useState(0);
   const [showFeature, setShowFeature] = useState(false);
-  const [url, setUrl] = useState("");
-  const [trialofferID, setTrialofferID] = useState("");
+  const [url, setUrl] = useState(``);
   const { data, loading } = useFetch(
     "https://quickbooks.intuit.com/qbmds-data/ca/billing_offers_ca.json"
   );
+
   const payrollOfferID =
-    !loading &&
-    data.campaigns.default.default.QBOP.QBOP_ENHANCED.MONTHLY.PAID.offer_id;
+    data?.campaigns.default.default.QBOP.QBOP_ENHANCED.MONTHLY.PAID.offer_id;
   const campaignOfferID =
-    !loading &&
-    data.campaigns.default.default.QBO[productName].MONTHLY.PAID.offer_id;
+    data?.campaigns.default.default.QBO[productName].MONTHLY.PAID.offer_id;
   const campaignOfferDetails =
     !loading && data.offerDefinitions[campaignOfferID];
   const productPrice = parseInt(campaignOfferDetails.basePrice);
   const discount = parseInt(campaignOfferDetails.discountPercentage);
   const payroll =
     !loading && parseInt(data.offerDefinitions[payrollOfferID].basePrice);
-  //Campaign Json Test
 
   const discountedProductPrice = productPrice * (discount / 100);
 
@@ -54,18 +51,16 @@ export default function PayrollTogether({
     }).format(amount);
   };
   useEffect(() => {
-    if (!loading) {
+    console.log(`campaignOfferID`, campaignOfferID);
+    if (campaignOfferID) {
       setUrl(
         `https://signup.quickbooks.intuit.com/?locale=${lang}&offerId=${campaignOfferID}&offerType=buy&bc=OBI-LL3`
       );
-      setTrialofferID(
-        data.campaigns.default.default.QBOP.QBOP_ENHANCED.MONTHLY.PAID.offer_id
-      );
     }
-  }, [campaignOfferID, data]);
+  }, [campaignOfferID, lang]);
 
   //Test Console
-  console.log(`trialofferID`, trialofferID);
+  console.log(`url`, url);
   //Test Console
 
   useEffect(() => {

@@ -39,11 +39,6 @@ export default function App() {
         productName="QBO_SIMPLE_START"
         selectedPlan="EasyStart"
       />
-      <PayrollTogether
-        {...qbo_simple_start}
-        productName="QBO_PLUS"
-        selectedPlan="EasyStart"
-      />
     </>
   );
 }
