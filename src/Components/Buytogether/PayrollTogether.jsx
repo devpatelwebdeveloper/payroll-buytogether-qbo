@@ -20,6 +20,11 @@ export default function PayrollTogether({
   buttonLabel
 }) {
   //Campaign Json Test
+  const [payrollSelected, setPayrollSelected] = useState(false);
+  const [payrollPrice, setPayrollPrice] = useState(0);
+  const [showFeature, setShowFeature] = useState(false);
+  const [url, setUrl] = useState("");
+  const [trialofferID, setTrialofferID] = useState("");
   const { data, loading } = useFetch(
     "https://quickbooks.intuit.com/qbmds-data/ca/billing_offers_ca.json"
   );
@@ -36,12 +41,6 @@ export default function PayrollTogether({
   const payroll =
     !loading && parseInt(data.offerDefinitions[payrollOfferID].basePrice);
   //Campaign Json Test
-  const [payrollSelected, setPayrollSelected] = useState(false);
-  const [payrollPrice, setPayrollPrice] = useState(0);
-  const [showFeature, setShowFeature] = useState(false);
-  const [url, setUrl] = useState(
-    `https://signup.quickbooks.intuit.com/?locale=${lang}&offerId=${campaignOfferID}&offerType=buy&bc=OBI-LL3`
-  );
 
   const discountedProductPrice = productPrice * (discount / 100);
 
@@ -54,6 +53,20 @@ export default function PayrollTogether({
       currencyDisplay: "narrowSymbol"
     }).format(amount);
   };
+  useEffect(() => {
+    if (!loading) {
+      setUrl(
+        `https://signup.quickbooks.intuit.com/?locale=${lang}&offerId=${campaignOfferID}&offerType=buy&bc=OBI-LL3`
+      );
+      setTrialofferID(
+        data.campaigns.default.default.QBOP.QBOP_ENHANCED.MONTHLY.PAID.offer_id
+      );
+    }
+  }, [campaignOfferID, data]);
+
+  //Test Console
+  console.log(`trialofferID`, trialofferID);
+  //Test Console
 
   useEffect(() => {
     if (payrollSelected) {
@@ -77,30 +90,30 @@ export default function PayrollTogether({
     <div className={styles.radioContainer}>
       <div className={styles.radioWrapper}>
         <input
-          id="noThanks"
-          name="trial"
+          id={`noThanks${campaignOfferID}`}
+          name={`trial${campaignOfferID}`}
           type="radio"
-          value="noThanks"
+          value={`noThanks${campaignOfferID}`}
           checked={payrollSelected === false}
           onChange={() => setPayrollSelected(false)}
           className={styles.radio}
         />
-        <label htmlFor="noThanks" className={styles.label}>
+        <label htmlFor={`noThanks${campaignOfferID}`} className={styles.label}>
           <span className={styles.labelRadio}></span>
           No Thanks
         </label>
       </div>
       <div className={styles.radioWrapper}>
         <input
-          id="addPayroll"
-          name="trial"
+          id={`addPayroll${productName}`}
+          name={`trial${campaignOfferID}`}
           type="radio"
-          value="addPayroll"
+          value={`addPayroll${productName}`}
           checked={payrollSelected === true}
           onChange={() => setPayrollSelected(true)}
           className={styles.radio}
         />
-        <label htmlFor="addPayroll" className={styles.label}>
+        <label htmlFor={`addPayroll${productName}`} className={styles.label}>
           <span className={styles.labelRadio}></span>
           Add Payroll
         </label>

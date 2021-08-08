@@ -41,13 +41,8 @@ export default function App() {
       />
       <PayrollTogether
         {...qbo_simple_start}
-        productName="QBO_ESSENTIALS"
-        selectedPlan="Essentials"
-      />
-      <PayrollTogether
-        {...qbo_simple_start}
         productName="QBO_PLUS"
-        selectedPlan="Plus"
+        selectedPlan="EasyStart"
       />
     </>
   );
