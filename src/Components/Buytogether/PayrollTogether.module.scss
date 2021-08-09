@@ -294,7 +294,7 @@
  display: flex;
 
  &::before {
-  content: url(./checkIcon.svg);
+  content: url('./checkIcon.svg');
   display: flex;
   justify-content: center;
   align-items: center;

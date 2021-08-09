@@ -16,3 +16,13 @@ export const useFetch = (url) => {
 
   return { data, loading };
 };
+
+export const formatCurrency = (amount, locale = "en-CA", decimals = 0) => {
+  return new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency: "CAD",
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+    currencyDisplay: "narrowSymbol"
+  }).format(amount);
+};

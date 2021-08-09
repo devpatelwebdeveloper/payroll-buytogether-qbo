@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styles from "./PayrollTogether.module.scss";
 import Button from "../Button";
-import { useFetch } from "../utils/useFetch";
-
-export default function PayrollTogether({
+import { useFetch, formatCurrency } from "../utils/useFetch";
+export default function BuyTogetherTest({
   lang,
   productName,
   mySelectedPlanTitle,
@@ -17,70 +16,61 @@ export default function PayrollTogether({
   monthLabel,
   totalLabel,
   taxLabel,
-  buttonLabel
+  buttonLabel,
+  radioAddLabel,
+  radioNoThanksLabel
 }) {
-  //Campaign Json Test
   const [payrollSelected, setPayrollSelected] = useState(false);
   const [payrollPrice, setPayrollPrice] = useState(0);
   const [showFeature, setShowFeature] = useState(false);
-  const [url, setUrl] = useState(``);
+  const [url, setUrl] = useState();
   const { data, loading } = useFetch(
     "https://quickbooks.intuit.com/qbmds-data/ca/billing_offers_ca.json"
   );
 
+  useEffect(() => {
+    if (!loading) {
+      setUrl(
+        `https://signup.quickbooks.intuit.com/?locale=${lang}&offerId=${campaignOfferID}&offerType=buy&bc=OBI-LL3`
+      );
+    }
+  }, [loading]);
+
+  if (loading) {
+    return <>Loading...</>;
+  }
+
   const payrollOfferID =
-    data?.campaigns.default.default.QBOP.QBOP_ENHANCED.MONTHLY.PAID.offer_id;
+    data.campaigns.default.default.QBOP.QBOP_ENHANCED.MONTHLY.PAID.offer_id;
   const campaignOfferID =
-    data?.campaigns.default.default.QBO[productName].MONTHLY.PAID.offer_id;
-  const campaignOfferDetails =
-    !loading && data.offerDefinitions[campaignOfferID];
+    data.campaigns.default.default.QBO[productName].MONTHLY.PAID.offer_id;
+  const campaignOfferDetails = data.offerDefinitions[campaignOfferID];
   const productPrice = parseInt(campaignOfferDetails.basePrice);
   const discount = parseInt(campaignOfferDetails.discountPercentage);
-  const payroll =
-    !loading && parseInt(data.offerDefinitions[payrollOfferID].basePrice);
+  const payroll = parseInt(data.offerDefinitions[payrollOfferID].basePrice);
 
-  const discountedProductPrice = productPrice * (discount / 100);
-
-  const formatCurrency = (amount, locale = "en-CA", decimals = 0) => {
-    return new Intl.NumberFormat(locale, {
-      style: "currency",
-      currency: "CAD",
-      minimumFractionDigits: decimals,
-      maximumFractionDigits: decimals,
-      currencyDisplay: "narrowSymbol"
-    }).format(amount);
+  const handleSelected = () => {
+    setPayrollSelected(true);
+    setPayrollPrice(payroll);
+    setUrl(
+      `https://signup.quickbooks.intuit.com/?locale=${lang}&offerId=${campaignOfferID}&offerType=buy&bc=OBI-LL3&additionalOfferIds=${payrollOfferID}&product=qbo`
+    );
   };
-  useEffect(() => {
-    console.log(`campaignOfferID`, campaignOfferID);
-    if (campaignOfferID) {
-      setUrl(
-        `https://signup.quickbooks.intuit.com/?locale=${lang}&offerId=${campaignOfferID}&offerType=buy&bc=OBI-LL3`
-      );
-    }
-  }, [campaignOfferID, lang]);
+  const handleNotSelected = () => {
+    setPayrollSelected(false);
+    setPayrollPrice(0);
+    setUrl(
+      `https://signup.quickbooks.intuit.com/?locale=${lang}&offerId=${campaignOfferID}&offerType=buy&bc=OBI-LL3`
+    );
+  };
 
-  //Test Console
-  console.log(`url`, url);
-  //Test Console
-
-  useEffect(() => {
-    if (payrollSelected) {
-      setPayrollPrice(payroll);
-      setUrl(
-        `https://signup.quickbooks.intuit.com/?locale=${lang}&offerId=${campaignOfferID}&offerType=buy&bc=OBI-LL3&additionalOfferIds=${payrollOfferID}&product=qbo`
-      );
-    } else {
-      setPayrollPrice(0);
-      setUrl(
-        `https://signup.quickbooks.intuit.com/?locale=${lang}&offerId=${campaignOfferID}&offerType=buy&bc=OBI-LL3`
-      );
-    }
-  }, [payrollSelected]);
-
+  //Math
+  const discountedProductPrice = productPrice * (discount / 100);
   const total = (payroll, current) => {
     return payroll + current;
   };
-
+  //Math
+  //JSX
   const radio = (
     <div className={styles.radioContainer}>
       <div className={styles.radioWrapper}>
@@ -90,12 +80,12 @@ export default function PayrollTogether({
           type="radio"
           value={`noThanks${campaignOfferID}`}
           checked={payrollSelected === false}
-          onChange={() => setPayrollSelected(false)}
+          onChange={handleNotSelected}
           className={styles.radio}
         />
         <label htmlFor={`noThanks${campaignOfferID}`} className={styles.label}>
           <span className={styles.labelRadio}></span>
-          No Thanks
+          {radioNoThanksLabel}
         </label>
       </div>
       <div className={styles.radioWrapper}>
@@ -105,12 +95,12 @@ export default function PayrollTogether({
           type="radio"
           value={`addPayroll${productName}`}
           checked={payrollSelected === true}
-          onChange={() => setPayrollSelected(true)}
+          onChange={handleSelected}
           className={styles.radio}
         />
         <label htmlFor={`addPayroll${productName}`} className={styles.label}>
           <span className={styles.labelRadio}></span>
-          Add Payroll
+          {radioAddLabel}
         </label>
       </div>
     </div>
@@ -149,9 +139,7 @@ export default function PayrollTogether({
       </svg>
     </span>
   );
-  if (loading) {
-    return <>loading...</>;
-  }
+  // JSX
   return (
     <div className={styles.payrollTogetherModal}>
       <div className={styles.selectedPlanContent}>

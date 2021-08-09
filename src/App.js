@@ -30,7 +30,9 @@ export default function App() {
     monthLabel: "mo",
     totalLabel: "Total",
     taxLabel: "+ applicable tax",
-    buttonLabel: "Continue"
+    buttonLabel: "Continue",
+    radioAddLabel: "Add Payroll",
+    radioNoThanksLabel: "No Thanks"
   };
   return (
     <>
